@@ -6,9 +6,9 @@ use serde_json::to_string_pretty;
 use crate::models::project_configuration::ProjectConfiguration;
 
 pub fn write_to_json<P: AsRef<Path>>(obj: &ProjectConfiguration, caminho: P) -> io::Result<()> {
-    let json_str = to_string_pretty(obj).map_err(|e| io::Error::new(io::ErrorKind::Other, e))?;
+    let json_str = to_string_pretty(obj).map_err(io::Error::other)?;
 
-    return fs::write(caminho, json_str);
+    fs::write(caminho, json_str)
 }
 
 // pub fn read_from_json<T: DeserializeOwned, P: AsRef<Path>>(caminho: P) -> io::Result<T> {

@@ -38,8 +38,8 @@ impl DispatchableCommand for InitCommand {
 
         if let Err(e) = create_migrations_project(project_name) {
             let msg = match e {
-                InitError::Io(inner) => format!("I/O error: {}", inner),
-                InitError::Json(inner) => format!("Configuration error: {}", inner),
+                InitError::Io(inner) => format!("I/O error: {inner}"),
+                InitError::Json(inner) => format!("Configuration error: {inner}"),
             };
             return Err(msg);
         }
