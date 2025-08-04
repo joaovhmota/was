@@ -2,6 +2,8 @@
 
 A simple project for me to learn and implement a database migration CLI tool in Rust.
 
+[![⚙️ Continuous Integration](https://github.com/joaovhmota/was/actions/workflows/continous-integration.yml/badge.svg?branch=main)](https://github.com/joaovhmota/was/actions/workflows/continous-integration.yml)
+
 ## Requirements 
 
 The following tools are required to install the CLI.
