@@ -1,3 +1,13 @@
+use clap::Parser;
+
+use crate::cli::{Cli, execute_command};
+
+mod cli;
+mod commands;
+mod models;
+
 fn main() {
-    println!("Hello, world!");
+    let cli = Cli::parse();
+
+    execute_command(&cli.command);
 }
