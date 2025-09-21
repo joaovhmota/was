@@ -1,4 +1,5 @@
 use crate::{
+    commands::init::init_args::InitArgs,
     logging::logger::{info, ok, warn},
     models::migrations_project_configuration::MigrationsProjectConfiguration,
 };
@@ -9,18 +10,16 @@ use std::{
     vec,
 };
 
-pub fn init_migrations_project(
-    project_name: &String,
-    force: bool,
-) -> Result<Option<String>, String> {
-    if force {
+pub fn init(args: &InitArgs) -> Result<Option<String>, String> {
+    if args.force {
         warn("Forcing initialization of the project… hope you know what you are doing");
     }
 
+    let project_name = &args.name;
     let project_path = Path::new(&project_name);
 
     if project_path.exists() {
-        if !force {
+        if !args.force {
             return Err("Migrations folder already exists".into());
         }
 
@@ -47,7 +46,7 @@ pub fn init_migrations_project(
         Err(error) => {
             return Err(error.to_string());
         }
-    };
+    }
 
     match create_migrations_project_migrations_folder(project_path) {
         Ok(_) => {

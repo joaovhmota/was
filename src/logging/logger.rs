@@ -1,7 +1,8 @@
 use std::sync::atomic::{AtomicBool, Ordering};
 
-use chrono::Local;
 use colored::{ColoredString, Colorize};
+
+use crate::commands::common::time::log_time_string;
 
 static IS_VERBOSE: AtomicBool = AtomicBool::new(false);
 
@@ -10,11 +11,7 @@ pub fn enable_verbose() {
 }
 
 fn print_pretty_log<T: AsRef<str>>(log_type: ColoredString, message: T) {
-    let log_time = Local::now();
-    let formatted_log_time = log_time
-        .format("[%d/%m/%Y %H:%M:%S]")
-        .to_string()
-        .bright_black();
+    let formatted_log_time = log_time_string().bright_black();
     let message_reference = message.as_ref();
 
     println!("{formatted_log_time} {log_type}: {message_reference}");

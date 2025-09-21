@@ -1,12 +1,12 @@
 use clap::Parser;
 
 use crate::{
-    commands::{Commands, init::init_migrations_project::init_migrations_project},
+    commands::{commands::Commands, init::init::init, new::new::new},
     logging::logger::error,
 };
 
 #[derive(Parser)]
-#[command(author, version, about, long_about = None)]
+#[command(author = "João Vinícius Hinkeldey Mota", version = "1.0.0", about = "Rust CLI tool to help you running your SQL scripts with two-way script execution. ", long_about = None)]
 #[command(propagate_version = true)]
 pub struct Cli {
     #[arg(
@@ -25,7 +25,8 @@ pub fn execute_command(command: &Commands) {
     println!();
 
     let command_result = match command {
-        Commands::Init(init_args) => init_migrations_project(&init_args.name, init_args.force),
+        Commands::Init(init_args) => init(init_args),
+        Commands::New(new_args) => new(new_args),
     };
 
     match command_result {

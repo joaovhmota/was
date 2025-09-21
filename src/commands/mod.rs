@@ -1,10 +1,4 @@
-use clap::Subcommand;
-
-use crate::commands::init::init_args::InitArgs;
-
+pub mod commands;
+pub mod common;
 pub mod init;
-
-#[derive(Subcommand)]
-pub enum Commands {
-    Init(InitArgs),
-}
+pub mod new;
