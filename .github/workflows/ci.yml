@@ -8,9 +8,10 @@ on:
   workflow_dispatch:
   
 jobs:
-  frontend:
-    name: Build React
+  react:
+    name: React
     runs-on: ubuntu-latest
+    continue-on-error: false
 
     steps:
       - uses: actions/checkout@v4
@@ -26,3 +27,31 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
+  
+  rust:
+    name: Rust (${{ matrix.rust }})
+    runs-on: ubuntu-latest
+    continue-on-error: false
+
+    strategy:
+      fail-fast: false
+      matrix:
+        rust: [stable, beta, nightly]
+
+    steps:      
+      - uses: actions/checkout@v4
+
+      - name: Install GTK and Glib dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libglib2.0-dev libgirepository1.0-dev pkg-config
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ matrix.rust }}
+          override: true
+
+      - name: Build
+        run: cargo build --all-targets
+        working-directory: src-tauri
